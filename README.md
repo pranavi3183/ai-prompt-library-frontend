@@ -1,59 +1,76 @@
-# Frontend
+# AI Prompt Library — Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.1.
+Repository: https://github.com/pranavi3183/ai-prompt-library-frontend
 
-## Development server
+This is the Angular frontend for the AI Prompt Library application (Angular 20). It is a small single-page app that consumes a JSON REST API (backend).
 
-To start a local development server, run:
+**Quick start**
 
-```bash
-ng serve
-```
+Prerequisites:
+- Node.js (recommend v18 or newer)
+- npm (bundled with Node) or yarn
+- Angular CLI (optional globally): `npm install -g @angular/cli`
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Clone, install, and run:
 
 ```bash
-ng generate component component-name
+git clone https://github.com/pranavi3183/ai-prompt-library-frontend.git
+cd ai-prompt-library-frontend
+npm install
+npm start
+# or: ng serve
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Open http://localhost:4200/ in your browser. The dev server auto-reloads on file changes.
 
-```bash
-ng generate --help
-```
+Scripts
+- `npm start` / `ng serve` — run dev server
+- `npm run build` — build production bundle
+- `npm test` — run unit tests
 
-## Building
+Configuration / API base URL
+- The frontend reads the backend base URL from `src/environments/environment.ts` (development) and `src/environments/environment.prod.ts` (production).
+- By default:
+	- development: `http://localhost:8000`
+	- production: `https://ai-prompt-library-backend.onrender.com`
 
-To build the project run:
+To point the app to a different backend, edit the `apiUrl` value in the environment files.
 
-```bash
-ng build
-```
+APIs used by this frontend
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+The app uses a small set of REST endpoints. These are implemented in `src/app/services/prompt.service.ts` and expect JSON.
 
-## Running unit tests
+- GET `{apiUrl}/prompts/` — list prompts. Optional query param: `?tag=<tagName>`
+- GET `{apiUrl}/prompts/{id}/` — get a single prompt by id
+- POST `{apiUrl}/prompts/` — create a new prompt. Body example (JSON):
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+	{
+		"title": "Example prompt",
+		"content": "Prompt content...",
+		"complexity": 2,
+		"tags": ["tag1","tag2"]
+	}
 
-```bash
-ng test
-```
+- GET `{apiUrl}/tags/` — list available tags
 
-## Running end-to-end tests
+Models expected by the frontend (see `src/app/models/prompt.model.ts`):
 
-For end-to-end (e2e) testing, run:
+- `Prompt`: `{ id, title, content, complexity, tags: [{id,name}], view_count, created_at }`
+- `CreatePromptDto`: `{ title, content, complexity, tags: string[] }`
 
-```bash
-ng e2e
-```
+Folder structure (important files)
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+- `src/` — application source
+	- `main.ts` — bootstrap
+	- `index.html`, `styles.scss`
+	- `app/` — app code
+		- `app.ts`, `app.routes.ts`, `app.config.ts` — app bootstrap and routing
+		- `components/` — UI components
+			- `add-prompt/` — add prompt UI
+			- `prompt-list/` — list prompts
+			- `prompt-detail/` — prompt details
+		- `models/` — TypeScript interfaces (`prompt.model.ts`)
+		- `services/` — HTTP services (`prompt.service.ts`)
+	- `environments/` — `environment.ts` and `environment.prod.ts`
 
-## Additional Resources
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
