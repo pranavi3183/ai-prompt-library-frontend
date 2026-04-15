@@ -1,0 +1,59 @@
+<div class="form-container">
+  <h1>Add New Prompt</h1>
+
+  <div class="error-msg" *ngIf="error">{{ error }}</div>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-group">
+      <label>Title *</label>
+      <input type="text" formControlName="title" placeholder="e.g. Cyberpunk City at Dusk" />
+      <span class="field-error"
+        *ngIf="form.get('title')?.invalid && form.get('title')?.touched">
+        Title must be at least 3 characters.
+      </span>
+    </div>
+
+    <div class="form-group">
+      <label>Content *</label>
+      <textarea formControlName="content" rows="5"
+        placeholder="Describe your AI image generation prompt in detail..."></textarea>
+      <span class="field-error"
+        *ngIf="form.get('content')?.invalid && form.get('content')?.touched">
+        Content must be at least 20 characters.
+      </span>
+    </div>
+
+    <div class="form-group">
+      <label>Complexity (1–10) *</label>
+      <div class="complexity-row">
+        <input type="range" formControlName="complexity" min="1" max="10" step="1" />
+        <span class="complexity-val">{{ form.get('complexity')?.value }}</span>
+      </div>
+      <span class="field-error"
+        *ngIf="form.get('complexity')?.invalid && form.get('complexity')?.touched">
+        Complexity must be between 1 and 10.
+      </span>
+    </div>
+
+    <div class="form-group">
+      <label>Tags (optional)</label>
+      <div class="tag-input-row">
+        <input type="text" [(ngModel)]="tagInput" [ngModelOptions]="{standalone: true}"
+          (keydown)="onTagKeydown($event)" placeholder="Type tag and press Enter" />
+        <button type="button" (click)="addTag()">Add</button>
+      </div>
+      <div class="tags-preview" *ngIf="tags.length > 0">
+        <span class="tag" *ngFor="let tag of tags">
+          #{{ tag }} <button type="button" (click)="removeTag(tag)">×</button>
+        </span>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" routerLink="/prompts">Cancel</button>
+      <button type="submit" class="btn-submit" [disabled]="submitting">
+        {{ submitting ? 'Saving...' : 'Create Prompt' }}
+      </button>
+    </div>
+  </form>
+</div>

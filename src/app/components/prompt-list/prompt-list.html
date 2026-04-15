@@ -1,0 +1,37 @@
+<div class="list-container">
+  <div class="list-header">
+    <h1>AI Prompt Library</h1>
+    <p class="subtitle">Discover and manage AI image generation prompts</p>
+  </div>
+
+  <div class="tag-filters" *ngIf="tags.length > 0">
+    <button class="tag-btn" [class.active]="selectedTag === ''" (click)="filterByTag('')">All</button>
+    <button
+      class="tag-btn"
+      *ngFor="let tag of tags"
+      [class.active]="selectedTag === tag.name"
+      (click)="filterByTag(tag.name)">
+      #{{ tag.name }}
+    </button>
+  </div>
+
+  <div class="loading" *ngIf="loading">Loading prompts...</div>
+  <div class="error" *ngIf="error">{{ error }}</div>
+
+  <div class="prompts-grid" *ngIf="!loading && !error">
+    <div class="empty" *ngIf="prompts.length === 0">No prompts found.</div>
+    <a class="prompt-card" *ngFor="let prompt of prompts" [routerLink]="['/prompts', prompt.id]">
+      <div class="card-top">
+        <span class="complexity-badge" [ngClass]="complexityClass(prompt.complexity)">
+          {{ complexityLabel(prompt.complexity) }} · {{ prompt.complexity }}/10
+        </span>
+        <span class="view-count">👁 {{ prompt.view_count }}</span>
+      </div>
+      <h2 class="card-title">{{ prompt.title }}</h2>
+      <p class="card-preview">{{ prompt.content | slice:0:100 }}{{ prompt.content.length > 100 ? '...' : '' }}</p>
+      <div class="card-tags" *ngIf="prompt.tags.length > 0">
+        <span class="tag" *ngFor="let tag of prompt.tags">#{{ tag.name }}</span>
+      </div>
+    </a>
+  </div>
+</div>

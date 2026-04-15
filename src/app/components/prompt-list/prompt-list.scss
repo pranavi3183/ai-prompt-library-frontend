@@ -1,0 +1,53 @@
+.list-container {
+  .list-header {
+    margin-bottom: 2rem;
+    h1 { font-size: 2rem; color: #e0e0f0; font-weight: 800; }
+    .subtitle { color: #6b7280; margin-top: 0.25rem; }
+  }
+
+  .tag-filters {
+    display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;
+    .tag-btn {
+      background: #1e1e2e; border: 1px solid #2a2a3a; color: #9ca3af;
+      padding: 0.35rem 0.8rem; border-radius: 20px; cursor: pointer;
+      font-size: 0.85rem; transition: all 0.2s;
+      &:hover, &.active { background: #7c3aed; border-color: #7c3aed; color: white; }
+    }
+  }
+
+  .loading, .error { text-align: center; padding: 3rem; color: #9ca3af; }
+  .error { color: #f87171; }
+
+  .prompts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .prompt-card {
+    background: #16161f; border: 1px solid #2a2a3a; border-radius: 10px;
+    padding: 1.25rem; text-decoration: none; color: inherit;
+    transition: transform 0.2s, border-color 0.2s;
+    display: block;
+    &:hover { transform: translateY(-3px); border-color: #7c3aed; }
+
+    .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
+
+    .complexity-badge {
+      font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 600;
+      &.easy { background: #064e3b; color: #34d399; }
+      &.medium { background: #451a03; color: #fbbf24; }
+      &.hard { background: #450a0a; color: #f87171; }
+    }
+
+    .view-count { font-size: 0.8rem; color: #6b7280; }
+
+    .card-title { font-size: 1.1rem; font-weight: 700; color: #e0e0f0; margin-bottom: 0.5rem; }
+    .card-preview { font-size: 0.875rem; color: #9ca3af; line-height: 1.5; margin-bottom: 0.75rem; }
+
+    .card-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .tag { font-size: 0.75rem; color: #7c3aed; background: #1e1b4b; padding: 0.15rem 0.5rem; border-radius: 10px; }
+  }
+
+  .empty { text-align: center; color: #6b7280; padding: 3rem; }
+}

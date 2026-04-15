@@ -1,0 +1,31 @@
+<div class="detail-container">
+  <button class="back-btn" (click)="goBack()">← Back</button>
+
+  <div class="loading" *ngIf="loading">Loading...</div>
+  <div class="error" *ngIf="error">{{ error }}</div>
+
+  <div class="detail-card" *ngIf="prompt && !loading">
+    <div class="detail-header">
+      <h1>{{ prompt.title }}</h1>
+      <div class="meta">
+        <span class="complexity-badge" [ngClass]="complexityClass(prompt?.complexity ?? 0)">
+          Complexity: {{ prompt?.complexity ?? 0 }}/10
+        </span>
+        <span class="view-badge">👁 {{ prompt?.view_count ?? 0 }} views</span>
+        <span class="date">{{ prompt.created_at | date:'mediumDate' }}</span>
+      </div>
+    </div>
+
+    <div class="content-box">
+      <label>Prompt Content</label>
+      <p>{{ prompt.content }}</p>
+    </div>
+
+    <div class="tags-section" *ngIf="(prompt?.tags?.length ?? 0) > 0">
+      <label>Tags</label>
+      <div class="tags">
+        <span class="tag" *ngFor="let tag of prompt?.tags">#{{ tag.name }}</span>
+      </div>
+    </div>
+  </div>
+</div>
